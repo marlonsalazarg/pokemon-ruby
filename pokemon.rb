@@ -147,5 +147,20 @@ class Pokemon
     # message "#[pokemon name] reached level [level]!" # -- Re-calculate the stat
   end
 
-  
+  # private methods:
+  # Create here auxiliary methods
+  def offensive_stat(type_first, _type_second)
+    table_multiplier = Pokedex::TYPE_MULTIPLIER
+    multiplier = 1
+    table_multiplier.each do |move|
+      multiplier *= move[:multiplier] if move[:user] == type_first && move[:target] == @type[0]
+    end
+    multiplier
+  end
+
+  def target_defensive_stat(defense_target)
+    # defense_target = arreglo
+    moves_specials = Pokedex::SPECIAL_MOVE_TYPE
+    moves_specials.include?(defense_target.type[0]) ? defense_target.special_defense_current : defense_target.defense_current
+  end
 end
