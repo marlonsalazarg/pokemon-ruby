@@ -42,4 +42,38 @@ class Battle
     # If the winner is the Player increase pokemon stats
   end
 
+  def print_battle_start
+    puts "#{@bot.name} sent out #{@bot.pokemon_player.name_pokemon}!"
+    puts "#{@player.name} sent out #{@player.pokemon_player.name_pokemon}!"
+    puts "-------------------Battle Start!-------------------"
+  end
+
+  def base_stats_battle
+    puts "#{@player.name}'s #{@player.pokemon_player.name_pokemon} - Level #{@player.pokemon_player.level}"
+    puts "HP: #{@player.pokemon_player.hp_current}"
+    puts "#{@bot.name}'s #{@bot.pokemon_player.name_pokemon} - Level #{@bot.level_pokemon}"
+    puts "HP: #{@bot.pokemon_player.hp_current}"
+  end
+
+  def priority_attack(move_pokemon_player, movimientos_bot)
+    tipo_move_player = move_pokemon_player
+    tipo_move_bot = movimientos_bot
+    arreglo_movimientos = [@poke_player, @poke_bot]
+    if tipo_move_player[:priority] > tipo_move_bot[:priority]
+      @poke_player
+    elsif tipo_move_player[:priority] < tipo_move_bot[:priority]
+      @poke_bot
+    elsif @player.pokemon_player.speed > @bot.pokemon_player.speed
+      @poke_player
+    elsif @player.pokemon_player.speed < @bot.pokemon_player.speed
+      @poke_bot
+    else
+      arreglo_movimientos.sample
+    end
+  end
+
+  def separador
+    puts "-" * 50
+  end
+
 end
