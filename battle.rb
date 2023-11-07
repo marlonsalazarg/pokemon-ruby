@@ -76,4 +76,27 @@ class Battle
     puts "-" * 50
   end
 
+  def bucle_battle
+    puts print_battle_start
+    until @poke_player.fainted? || @poke_bot.fainted?
+      puts base_stats_battle
+      @movimientos_user = @player.select_move
+      @movimientos_bot = @bot.select_move
+      primer_ataque = priority_attack(@movimientos_user, @movimientos_bot)
+      segundo_ataque = @poke_player == primer_ataque ? @poke_bot : @poke_player
+
+      separador
+      primer_ataque.attack(segundo_ataque)
+      separador
+      segundo_ataque.attack(primer_ataque) unless segundo_ataque.fainted?
+      separador
+    end
+  end
+
+  def battle_end(winner, losser)
+    puts "#{losser} FAINTED!"
+    separador
+    puts "#{winner} WINS!"
+    puts "#{'-' * 19}Battle Ended!#{'-' * 19}"
+  end
 end
