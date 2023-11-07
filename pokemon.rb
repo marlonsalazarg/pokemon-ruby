@@ -58,4 +58,23 @@ class Pokemon
     }
   end
 
+  def prepare_for_battle
+    @hp_current = @stats[:hp]
+    @attack_current = @stats[:attack]
+    @defense_current = @stats[:defense]
+    @special_attack_current = @stats[:special_attack]
+    @special_defense_current = @stats[:special_defense]
+    @speed_current = @stats[:speed]
+  end
+
+  def receive_damage
+    # Complete this
+  end
+
+  def set_current_move; end
+
+  def fainted?
+    @hp_current <= 0
+  end
+
 end
