@@ -35,5 +35,14 @@ class Bot < Player
   end
 end
 
+class Leader < Player
+  def initialize
+    super("Brock", "Onix", "Onix", 10)
+  end
 
+  def select_move
+    movimientos_bot = @pokemon_player.moves
+    rand_mov_bot = movimientos_bot.sample
+    @pokemon_player.move_current = Pokedex::MOVES[rand_mov_bot]
+  end
 end
