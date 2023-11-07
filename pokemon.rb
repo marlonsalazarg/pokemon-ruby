@@ -126,4 +126,26 @@ class Pokemon
     # Else, print "But it MISSED!"
   end
 
+  def increase_stats(target)
+    @exp_level_up = ((6 / 5.0 * (@level**3)) - (15 * (@level**2)) + (100 * @level) - 140).floor
+    @gain_exp = (target.base_exp * target.level / 7.0).floor
+    @exp_current += @gain_exp
+    if @exp_current >= @exp_level_up
+      @level += 1
+      @stats = { hp: ((((2 * @hp) + @individual_stats[:hp] + (@effort_values[:hp] / 4.0).floor) * @level / 100) + @level + 10).floor,
+                 attack: ((((2 * @attack_p) + @individual_stats[:attack] + (@effort_values[:attack] / 4.0).floor) * @level / 100) + 5).floor,
+                 defense: ((((2 * @defense) + @individual_stats[:defense] + (@effort_values[:defense] / 4.0).floor) * @level / 100) + 5).floor,
+                 special_attack: ((((2 * @special_attack) + @individual_stats[:special_attack] + (@effort_values[:special_attack] / 4.0).floor) * @level / 100) + 5).floor,
+                 special_defense: ((((2 * @special_defense) + @individual_stats[:special_defense] + (@effort_values[:special_defense] / 4.0).floor) * @level / 100) + 5).floor,
+                 speed: ((((2 * @speed) + @individual_stats[:speed] + (@effort_values[:speed] / 4.0).floor) * @level / 100) + 5).floor }
+      puts "#{@name_pokemon} reached level #{@level}!"
+    end
+    puts "#{@name_pokemon} gained #{@gain_exp} experience points"
+    # Increase stats base on the defeated pokemon and print message "#[pokemon name] gained [amount] experience points"
+
+    # If the new experience point are enough to level up, do it and print
+    # message "#[pokemon name] reached level [level]!" # -- Re-calculate the stat
+  end
+
+  
 end
