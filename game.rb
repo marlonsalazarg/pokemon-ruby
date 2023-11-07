@@ -61,5 +61,54 @@ class Game
     puts "Right! So your name is #{@name.upcase}!"
   end
 
- 
+  def choose_pokemon
+    puts "Your very own POKEMON legend is about to unfold! A world of"
+    puts "dreams and adventures with POKEMON awaits! Let's go!"
+    puts "Here, #{@name.upcase}! There are 3 POKEMON here! Haha!"
+    puts "When I was young, I was a serious POKEMON trainer."
+    puts "In my old age, I have only 3 left, but you can have one! Choose!\n\n"
+
+    print_pokemons
+
+    until @pokemons_medium_slow.include?(@pokemon_chosen.capitalize)
+      print "> "
+      @pokemon_chosen = gets.chomp
+    end
+    @pokemon_chosen.capitalize!
+    puts ""
+    puts "You selected #{@pokemon_chosen}. Great choice!"
+    puts "Give your pokemon a name?"
+    print "> "
+    @name_pokemon = gets.chomp
+    @name_pokemon = @name_pokemon.empty? ? @pokemon_chosen : @name_pokemon
+
+    puts "#{@name.upcase}, raise your young #{@name_pokemon.upcase} by making it fight!"
+    puts "When you feel ready you can challenge BROCK, the PEWTER's GYM LEADER"
+
+    print_menu
+  end
+
+  def menu_functions
+    action = nil
+    until action == "Exit"
+      print "> "
+      action = gets.chomp
+      case action
+      when "Train"
+        bot = Bot.new
+        print_train(@player, bot)
+      when "Leader"
+        leader = Leader.new
+        print_challenge_leader(@player, leader)
+
+      when "Stats"
+        show_stats
+        print_menu
+      when "Exit" then goodbye
+      end
+
+    end
+  end
+
+  
 end
