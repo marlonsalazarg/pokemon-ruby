@@ -77,4 +77,53 @@ class Pokemon
     @hp_current <= 0
   end
 
+  def attack(target)
+    # Print attack message 'Tortuguita used MOVE!'
+    puts "#{@name_pokemon} used #{@move_current[:name]}!"
+    # Accuracy check
+    hit = rand(1..100) <= @move_current[:accuracy]
+    # If the movement is not missed
+    if hit
+      # -- Calculate base damage
+      damage = ((((2 * @level / 5.0) + 2).floor * offensive_stat(@move_current[:type],
+                                                                 target.type) * @move_current[:power] / target_defensive_stat(target)).floor / 50.0).floor + 2
+      # -- Critical Hit check
+      critical = rand(1..16) == 16
+      if critical
+        current_damage = damage * 1.5
+        puts "It was CRITICAL hit!"
+      else
+        current_damage = damage
+      end
+      effectiveness = offensive_stat(@move_current[:type], target.type)
+      case effectiveness
+      when 0.5
+        current_damage *= 0.5
+        puts "It's not very effective..."
+      when 2
+        current_damage *= 2
+        puts "It's super effective!"
+      when 0
+        current_damage *= 0
+        puts "It doesn't affect #{target.name_pokemon}!"
+      else
+        current_damage *= 1
+      end
+      target.hp_current -= current_damage.floor
+      puts "And it hit #{target.name_pokemon} with #{current_damage.floor} damage"
+
+    else
+      puts "But it MISSED!"
+    end
+
+    # -- If critical, multiply base damage and print message 'It was CRITICAL hit!'
+    # -- Effectiveness check
+    # -- Mutltiply damage by effectiveness multiplier and round down. Print message if neccesary
+    # ---- "It's not very effective..." when effectivenes is less than or equal to 0.5
+    # ---- "It's super effective!" when effectivenes is greater than or equal to 1.5
+    # ---- "It doesn't affect [target name]!" when effectivenes is 0
+    # -- Inflict damage to target and print message "And it hit [target name] with [damage] damage""
+    # Else, print "But it MISSED!"
+  end
+
 end
